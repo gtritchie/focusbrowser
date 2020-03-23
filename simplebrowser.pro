@@ -5,8 +5,6 @@ QT += webenginewidgets
 HEADERS += \
     browser.h \
     browserwindow.h \
-    downloadmanagerwidget.h \
-    downloadwidget.h \
     tabwidget.h \
     webpage.h \
     webpopupwindow.h \
@@ -15,8 +13,6 @@ HEADERS += \
 SOURCES += \
     browser.cpp \
     browserwindow.cpp \
-    downloadmanagerwidget.cpp \
-    downloadwidget.cpp \
     main.cpp \
     tabwidget.cpp \
     webpage.cpp \

@@ -50,7 +50,6 @@
 
 #include "browser.h"
 #include "browserwindow.h"
-#include "downloadmanagerwidget.h"
 #include "tabwidget.h"
 #include "webview.h"
 #include <QApplication>
@@ -159,7 +158,6 @@ QMenu *BrowserWindow::createFileMenu(TabWidget *tabWidget)
 {
     QMenu *fileMenu = new QMenu(tr("&File"));
     fileMenu->addAction(tr("&New Window"), this, &BrowserWindow::handleNewWindowTriggered, QKeySequence::New);
-    fileMenu->addAction(tr("New &Incognito Window"), this, &BrowserWindow::handleNewIncognitoWindowTriggered);
 
     QAction *newTabAction = new QAction(tr("New &Tab"), this);
     newTabAction->setShortcuts(QKeySequence::AddTab);
@@ -392,14 +390,6 @@ QToolBar *BrowserWindow::createToolBar()
     m_urlLineEdit->setClearButtonEnabled(true);
     navigationBar->addWidget(m_urlLineEdit);
 
-    auto downloadsAction = new QAction(this);
-    downloadsAction->setIcon(QIcon(QStringLiteral(":go-bottom.png")));
-    downloadsAction->setToolTip(tr("Show downloads"));
-    navigationBar->addAction(downloadsAction);
-    connect(downloadsAction, &QAction::triggered, [this]() {
-        m_browser->downloadManagerWidget().show();
-    });
-
     return navigationBar;
 }
 
@@ -438,12 +428,6 @@ void BrowserWindow::handleWebViewTitleChanged(const QString &title)
 void BrowserWindow::handleNewWindowTriggered()
 {
     BrowserWindow *window = m_browser->createWindow();
-    window->m_urlLineEdit->setFocus();
-}
-
-void BrowserWindow::handleNewIncognitoWindowTriggered()
-{
-    BrowserWindow *window = m_browser->createWindow(/* offTheRecord: */ true);
     window->m_urlLineEdit->setFocus();
 }
 

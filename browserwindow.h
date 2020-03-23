@@ -80,7 +80,6 @@ protected:
 
 private slots:
     void handleNewWindowTriggered();
-    void handleNewIncognitoWindowTriggered();
     void handleFileOpenTriggered();
     void handleFindActionTriggered();
     void handleShowWindowTriggered();

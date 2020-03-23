@@ -53,24 +53,11 @@
 
 Browser::Browser()
 {
-    // Quit application if the download manager window is the only remaining window
-    m_downloadManagerWidget.setAttribute(Qt::WA_QuitOnClose, false);
-
-    QObject::connect(
-        QWebEngineProfile::defaultProfile(), &QWebEngineProfile::downloadRequested,
-        &m_downloadManagerWidget, &DownloadManagerWidget::downloadRequested);
 }
 
-BrowserWindow *Browser::createWindow(bool offTheRecord)
+BrowserWindow *Browser::createWindow()
 {
-    if (offTheRecord && !m_otrProfile) {
-        m_otrProfile.reset(new QWebEngineProfile);
-        QObject::connect(
-            m_otrProfile.get(), &QWebEngineProfile::downloadRequested,
-            &m_downloadManagerWidget, &DownloadManagerWidget::downloadRequested);
-    }
-    auto profile = offTheRecord ? m_otrProfile.get() : QWebEngineProfile::defaultProfile();
-    auto mainWindow = new BrowserWindow(this, profile, false);
+    auto mainWindow = new BrowserWindow(this, QWebEngineProfile::defaultProfile(), false);
     m_windows.append(mainWindow);
     QObject::connect(mainWindow, &QObject::destroyed, [this, mainWindow]() {
         m_windows.removeOne(mainWindow);
