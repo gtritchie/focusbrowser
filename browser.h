@@ -64,7 +64,6 @@ public:
     QVector<BrowserWindow*> windows() { return m_windows; }
 
     BrowserWindow *createWindow();
-    BrowserWindow *createDevToolsWindow();
 
 private:
     QVector<BrowserWindow*> m_windows;

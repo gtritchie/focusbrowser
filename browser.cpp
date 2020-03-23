@@ -57,19 +57,7 @@ Browser::Browser()
 
 BrowserWindow *Browser::createWindow()
 {
-    auto mainWindow = new BrowserWindow(this, QWebEngineProfile::defaultProfile(), false);
-    m_windows.append(mainWindow);
-    QObject::connect(mainWindow, &QObject::destroyed, [this, mainWindow]() {
-        m_windows.removeOne(mainWindow);
-    });
-    mainWindow->show();
-    return mainWindow;
-}
-
-BrowserWindow *Browser::createDevToolsWindow()
-{
-    auto profile = QWebEngineProfile::defaultProfile();
-    auto mainWindow = new BrowserWindow(this, profile, true);
+    auto mainWindow = new BrowserWindow(this, QWebEngineProfile::defaultProfile());
     m_windows.append(mainWindow);
     QObject::connect(mainWindow, &QObject::destroyed, [this, mainWindow]() {
         m_windows.removeOne(mainWindow);
