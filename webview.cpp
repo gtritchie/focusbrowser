@@ -149,50 +149,19 @@ QIcon WebView::favIcon() const
     }
 }
 
-QWebEngineView *WebView::createWindow(QWebEnginePage::WebWindowType type)
+QWebEngineView *WebView::createWindow(QWebEnginePage::WebWindowType /*type*/)
 {
     BrowserWindow *mainWindow = qobject_cast<BrowserWindow*>(window());
     if (!mainWindow)
         return nullptr;
 
-    switch (type) {
-    case QWebEnginePage::WebBrowserTab: {
-        return mainWindow->tabWidget()->createTab();
-    }
-    case QWebEnginePage::WebBrowserBackgroundTab: {
-        return mainWindow->tabWidget()->createBackgroundTab();
-    }
-    case QWebEnginePage::WebBrowserWindow: {
-        return mainWindow->browser()->createWindow()->currentTab();
-    }
-    case QWebEnginePage::WebDialog: {
-        WebPopupWindow *popup = new WebPopupWindow(page()->profile());
-        connect(popup->view(), &WebView::devToolsRequested, this, &WebView::devToolsRequested);
-        return popup->view();
-    }
-    }
-    return nullptr;
+    return mainWindow->browser()->createWindow()->currentTab();
 }
 
 void WebView::contextMenuEvent(QContextMenuEvent *event)
 {
     QMenu *menu = page()->createStandardContextMenu();
     const QList<QAction *> actions = menu->actions();
-    auto inspectElement = std::find(actions.cbegin(), actions.cend(), page()->action(QWebEnginePage::InspectElement));
-    if (inspectElement == actions.cend()) {
-        auto viewSource = std::find(actions.cbegin(), actions.cend(), page()->action(QWebEnginePage::ViewSource));
-        if (viewSource == actions.cend())
-            menu->addSeparator();
-
-        QAction *action = new QAction(menu);
-        action->setText("Open inspector in new window");
-        connect(action, &QAction::triggered, [this]() { emit devToolsRequested(page()); });
-
-        QAction *before(inspectElement == actions.cend() ? nullptr : *inspectElement);
-        menu->insertAction(before, action);
-    } else {
-        (*inspectElement)->setText(tr("Inspect element"));
-    }
     menu->popup(event->globalPos());
 }
 

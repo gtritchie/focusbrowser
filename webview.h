@@ -75,7 +75,6 @@ protected:
 signals:
     void webActionEnabledChanged(QWebEnginePage::WebAction webAction, bool enabled);
     void favIconChanged(const QIcon &icon);
-    void devToolsRequested(QWebEnginePage *source);
 
 private:
     void createWebActionTrigger(QWebEnginePage *page, QWebEnginePage::WebAction);

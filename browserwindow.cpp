@@ -55,18 +55,11 @@
 #include <QApplication>
 #include <QCloseEvent>
 #include <QDesktopWidget>
-#include <QEvent>
-#include <QFileDialog>
-#include <QInputDialog>
 #include <QMenuBar>
 #include <QMessageBox>
 #include <QScreen>
 #include <QStatusBar>
-#include <QToolBar>
 #include <QVBoxLayout>
-#if QT_VERSION >= QT_VERSION_CHECK(5, 14, 0)
-#include <QWebEngineFindTextResult>
-#endif
 #include <QWebEngineProfile>
 
 BrowserWindow::BrowserWindow(Browser *browser, QWebEngineProfile *profile)
@@ -132,9 +125,7 @@ QMenu *BrowserWindow::createHelpMenu()
 
 void BrowserWindow::handleWebViewTitleChanged(const QString &title)
 {
-    QString suffix = m_profile->isOffTheRecord()
-        ? tr("Qt Simple Browser (Incognito)")
-        : tr("Qt Simple Browser");
+    QString suffix = tr("Qt Simple Browser");
 
     if (title.isEmpty())
         setWindowTitle(suffix);

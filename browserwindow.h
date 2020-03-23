@@ -52,7 +52,6 @@
 #define BROWSERWINDOW_H
 
 #include <QMainWindow>
-#include <QTime>
 #include <QWebEnginePage>
 
 QT_BEGIN_NAMESPACE
